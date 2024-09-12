@@ -19,5 +19,6 @@ namespace SMSWEBAPI.Models
         public int ClassId { get; set; }
 
 
+
     }
 }

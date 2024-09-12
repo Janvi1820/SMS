@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using SMS.Models;
+using SMSWEBAPI.Models;
 using System.Text;
 
 namespace SMS.Controllers
@@ -45,10 +46,10 @@ namespace SMS.Controllers
         }
         [HttpGet]
 
-        public IActionResult ViewLeaves(int id)
+        public IActionResult ViewLeaves()
         {
             List<TeacherLeave> teacherLeaves = new List<TeacherLeave>();
-            string url =$"https://localhost:7264/api/Academic/GetLeave/{id}";
+            string url =$"https://localhost:7264/api/Academic/GetLeave";
             HttpResponseMessage responseMessage = client.GetAsync(url).Result;
             if (responseMessage.IsSuccessStatusCode)
             {
@@ -68,6 +69,59 @@ namespace SMS.Controllers
                 return View();
             }
 
+        }
+      
+        public IActionResult AddAttendance()
+        {
+            List<Student> emps = new List<Student>();
+            string url = "https://localhost:7264/api/Students/GetAllStudents";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = response.Content.ReadAsStringAsync().Result;
+                var obj = JsonConvert.DeserializeObject<List<Student>>(jsondata);
+                if (obj != null)
+                {
+                    emps = obj;
+                }
+            }
+
+            return View(emps);
+        }
+        [HttpPost]
+        public IActionResult AddAttendance(int[] id)
+        {
+            List<Student> students = new List<Student>();
+        
+            string url = $"https://localhost:7264/api/Students/AddAttendance/{id}";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = response.Content.ReadAsStringAsync().Result;
+                students = JsonConvert.DeserializeObject<List<Student>>(jsondata);
+                return View(students);
+
+            }
+            else
+            {
+                TempData["Msg"] = "Couldnt fetch student list Please write a compliant if the problem continues";
+                return View();
+            }
+
+        }
+        public IActionResult GetAttendance(int id)
+        {
+            string url = $"https://localhost:7264/api/Students/GetAttendance/{id}";
+            HttpResponseMessage response = client.GetAsync(url).Result;
+             StudentAttendance attendance = new StudentAttendance();
+            if (response.IsSuccessStatusCode)
+            {
+                var jsondata = response.Content.ReadAsStringAsync().Result;
+                attendance = JsonConvert.DeserializeObject<StudentAttendance>(jsondata);
+              
+            }
+
+            return View(attendance);
         }
 
     }
