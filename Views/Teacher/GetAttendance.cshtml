@@ -1,24 +1,19 @@
 ﻿@model SMSWEBAPI.Models.StudentAttendance
 
-@{
-    ViewData["Title"] = "Student Details";
-}
-
 <h2>Student Details</h2>
 
-<div class="card">
-    <div class="card-body">
-        <h4 class="card-title">Student Information</h4>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th scope="row">Class ID</th>
+            <td>@Model.ClassId</td>
+        </tr>
+        <tr>
+            <th scope="row">Student ID</th>
+            <td>@Model.StudentId</td>
+        </tr>
+        <!-- You can add more fields here as needed -->
+    </tbody>
+</table>
 
-        <dl class="row">
-           
-            <dt class="col-sm-3">Class ID</dt>
-            <dd class="col-sm-9">@Model.ClassId</dd>
-            <dt class="col-sm-3">ID</dt>
-            <dd class="col-sm-9">@Model.StudentId</dd>
-
-        </dl>
-
-        <a asp-action="Index" class="btn btn-primary">Back to List</a>
-    </div>
-</div>
+<a asp-action="Index" class="btn btn-primary">Back to List</a>

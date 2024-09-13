@@ -71,6 +71,7 @@ namespace SMS.Controllers
 
         }
       
+
         public IActionResult AddAttendance()
         {
             List<Student> emps = new List<Student>();
@@ -104,7 +105,7 @@ namespace SMS.Controllers
             }
             else
             {
-                TempData["Msg"] = "Couldnt fetch student list Please write a compliant if the problem continues";
+                TempData["Msg"] = "";
                 return View();
             }
 
@@ -122,6 +123,40 @@ namespace SMS.Controllers
             }
 
             return View(attendance);
+        }
+        public IActionResult ApprovetheRequest(int id)
+        {
+
+            string url = $"https://localhost:7238/api/User/ApprovLeaveRequest/{id}";
+
+            HttpResponseMessage message = client.PutAsync(url, null).Result;
+            if (message.IsSuccessStatusCode)
+            {
+                TempData["Msg"] = "Successfully Approved request";
+                return RedirectToAction("ViewLeaveRequest");
+            }
+            else
+            {
+                return View();
+            }
+
+        }
+        public IActionResult RejecttheRequest(int id)
+        {
+
+            string url = $"https://localhost:7238/api/User/RejectLeaveRequest/{id}";
+
+            HttpResponseMessage message = client.PutAsync(url, null).Result;
+            if (message.IsSuccessStatusCode)
+            {
+                TempData["Msg"] = "Successfully Rejected request";
+                return RedirectToAction("ViewLeaveRequest");
+            }
+            else
+            {
+                return View();
+            }
+
         }
 
     }

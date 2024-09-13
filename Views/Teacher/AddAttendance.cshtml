@@ -1,34 +1,40 @@
 ﻿@using SMSWEBAPI.Models
 @model List<Student>
 
-
-
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-body">
-            <table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">Mark Attendance</th>
-                        <th scope="col">Full Name</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr>
-                            <th scope="row">
-                                <!-- Add a checkbox or radio button to mark attendance -->
-                                <input type="checkbox" name="attendance" value="@item.userid" />
-                            </th>
-                            <td>@item.FirstName @item.MiddleName @item.LastName</td>
-                        </tr>
-                    }
-                    <div class="form-group">
-                        <input type="submit" value="Mark As Present" class="btn btn-primary" />
-                    </div>
-                </tbody>
-            </table>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-lg">
+                <div class="card-header bg-primary text-white">
+                    <h4 class="mb-0">Mark Attendance</h4>
+                </div>
+                <div class="card-body">
+                    <form method="post">
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th scope="col" style="width: 10%;">Present</th>
+                                    <th scope="col">Student Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td class="text-center">
+                                            <input type="checkbox" name="attendance" value="@item.userid" class="form-check-input" />
+                                        </td>
+                                        <td>@item.FirstName @item.MiddleName @item.LastName (@item.gender)</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        <div class="d-flex justify-content-end mt-3">
+                            <input type="submit" value="Mark As Present" class="btn btn-success" />
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </div>

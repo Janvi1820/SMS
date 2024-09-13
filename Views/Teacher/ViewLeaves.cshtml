@@ -1,50 +1,42 @@
 ﻿@using SMSWEBAPI.Models
 @model List<TeacherLeave>
 
+<div class="container mt-5">
+    <div class="d-flex justify-content-end">
+        <a asp-controller="Teacher" asp-action="ApplyLeave" class="btn btn-info mb-3">Apply Leave</a>
+    </div>
 
-
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-body">
-            <!-- Button trigger modal -->
-            <a asp-controller="Teacher" asp-action="ApplyLeave"><input type="button" value="Apply Leave" class="btn btn-info m-1" /></a>
-
-            
-<table class="table">
-    <thead class="thead-dark">
-        <tr>
-
-                        <th scope="col">Leavetype</th>
-                        <th scope="col">StartDate</th>
-                        <th scope="col">EndDate</th>
-                        <th scope="col">LeaveReason</th>
-                        <th scope="col">Status</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach(var item in Model)
+    <div class="row">
+        @foreach (var item in Model)
         {
-            <tr>
-                
-                <td>@item.Leavetype</td>
-                <td>@item.StartDate</td>
-                <td>@item.EndDate</td>
-                <td>@item.LeaveReason</td>
-                <td>@item.Status</td>
-            </tr>
+            <!-- Increase the card size by changing col-md-4 to col-md-6 (50% width per card on medium screens) -->
+            <div class="col-md-6 mb-4">
+                <div class="card shadow-lg" style="min-height: 250px; padding: 20px;">
+                    <div class="card-header bg-dark text-white">
+                        <h5 class="card-title mb-0">@item.Leavetype</h5>
+                    </div>
+                    <div class="card-body">
+                        <p><strong>Start Date:</strong> @item.StartDate.ToString("MM/dd/yyyy")</p>
+                        <p><strong>End Date:</strong> @item.EndDate.ToString("MM/dd/yyyy")</p>
+                        <p><strong>Reason:</strong> @item.LeaveReason</p>
+                        <p>
+                            <strong>Status:</strong>
+                            @if (item.Status == "Approved")
+                            {
+                                <span class="badge badge-success">@item.Status</span>
+                            }
+                            else if (item.Status == "Rejected")
+                            {
+                                <span class="badge badge-danger">@item.Status</span>
+                            }
+                            else
+                            {
+                                <span class="badge badge-warning">@item.Status</span>
+                            }
+                        </p>
+                    </div>
+                </div>
+            </div>
         }
-        
-       
-    </tbody>
-</table>
+    </div>
 </div>
-</div>
-</div>
-
-
-
-
-
-
-
-
